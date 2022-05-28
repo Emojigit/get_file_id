@@ -12,12 +12,8 @@ def setup(bot):
     async def catworm(event):
         replymsg = await event.get_reply_message()
         if replymsg and replymsg.document != None:
-            async with bot.action(event.chat, 'typing') as action:
-                id = utils.pack_bot_file_id(replymsg.document)
-                if id != None:
-                    await replymsg.reply("`{}`".format(id))
-                else:
-                    await replymsg.reply("Got file, but error.")
-                raise events.StopPropagation
+            id = replymsg.file.id
+            await replymsg.reply("`{}`".format(id))
+            raise events.StopPropagation
         await event.respond("Please reply to a valid file.")
         raise events.StopPropagation
